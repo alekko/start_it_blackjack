@@ -1,2 +1,2 @@
 # Komandas 'draudzīgie vampīri' spēle "Blacjack" jeb "21"
-test
+# Šeit būs apraksts par objektiem (Card, Table, Deck, Player)
