@@ -29,6 +29,7 @@ class Deck {
         }
 
         }
+
         shuffle(){
                 for (var i = this.cards.length - 1; i > 0; i--) {
                     var j = Math.floor(Math.random() * (i + 1));
@@ -38,8 +39,6 @@ class Deck {
                 }
         }
         showDeck(){
-            //Šeit man arī neiet, nesaprotu kāpēc, es mēģinu izvadīt visu kavu, bet no sākuma lai vismaz kkas izvadās :)
-            //document.getElementById('demo').innerHTML = deck1.size;
             for( let i = 0; i < this.cards.length; i++ )
             console.log(deck1.cards[i]);
         }
