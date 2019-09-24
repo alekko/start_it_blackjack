@@ -3,3 +3,5 @@
 
 
 # Objekts Card  saturēs sevī visas kavā iespējamās kārtis un to vērtības.
+
+Objekts Player satur informāciju par spelētāja ID, paņemtajām kārtīm, punktu skaitu.
