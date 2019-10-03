@@ -39,4 +39,3 @@ class Deck {
 
   getCards = stringified => (stringified ? JSON.stringify(this.cards) : this.cards)
 }
-

@@ -1,6 +1,5 @@
 class Table {
-  constructor(deckCount) {
-    this.decks = []
+  constructor(deckCount=2) {
     this.cards = []
     this.players = []
     this.deckCount = deckCount
@@ -9,28 +8,18 @@ class Table {
     this.maximumPoints = 21
   }
 
-  buildDecks = () => {
-    for (let i = 0; i < this.deckCount; i++) {
-      const deck = new Deck()
-      deck.build()
-      deck.shuffle()
-      this.decks.push(deck)
+  buildCardsFromDecks = () => {
+    for (let counter = 0; counter < this.deckCount; counter++) {
+      const newDeck = new Deck()
+      newDeck.build()
+      newDeck.shuffle()
+
+      newDeck.cards.forEach(card => this.cards.push(card))
     }
   }
 
-  buildCards = () => {
-    for (let i = 0; i < this.decks.length; i++) {
-      for (let j = 0; j < this.decks[i].cards.length; j++) {
-        this.cards.push(this.decks[i].cards[j])
-      }
-    }
-  }
-
-  addPlayers = () => {
-    const player = new Player('Player One', 'player')
-    const dealer = new Player('Dealer', 'dealer')
-    this.players.push(player)
-    this.players.push(dealer)
+  addPlayers = players => {
+    players.forEach(player => this.players.push(player))
   }
 
   startGame = () => {
