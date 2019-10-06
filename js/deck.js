@@ -20,8 +20,8 @@ class Deck {
           )
         }
         else {
-          this.cards.push(
-            new Card(10, NAMES[n], SUITS[j])
+          this.cards.push( /*Push card in array "this.cards[]" */
+            new Card(10, NAMES[n], SUITS[j]) /*Add new card object with value "10" to class "Card", that is created in card.js file. */
           )
         }
       }

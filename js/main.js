@@ -1,9 +1,7 @@
 const table = new Table()
-
-const players = [
-  new Player('Player One', 'player'),
-  new Player('Dealer', 'dealer')
-]
+const Players = []
+ Players.push( new Player('Player One', 'player'))
+ Players.push( new Player('Dealer', 'dealer'))
 
 const deck1 = new Deck()
 deck1.build()
@@ -18,5 +16,5 @@ const decks = [
   deck2
 ]
 
-table.addPlayers(players)
+table.addPlayers(Player)
 // table.buildCardsFromDecks(decks)
