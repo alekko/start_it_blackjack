@@ -16,5 +16,5 @@ const decks = [
   deck2
 ]
 
-table.addPlayers(Player)
+table.addPlayers(Players)
 // table.buildCardsFromDecks(decks)
