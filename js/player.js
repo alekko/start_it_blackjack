@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 class player {
     constructor(playerId, cardId, points, playerStatus){
     this.playerId = playerId; /**Gamers aka players freely choosen individual name as identifier */
@@ -11,3 +12,23 @@ class player {
     }
 }
 const player = new player('geimeris_number_one','Queen','10','player');
+=======
+class Player {
+  constructor(name, type) {
+    this.points = 0
+    this.cards = []
+    this.type = type
+    this.name = name
+  }
+
+  getName = () => this.name
+  setName = (name) => this.name = names
+
+  addCard = (card) => {
+    this.updatePoints(card.value)
+    this.cards.push(card)
+  }
+
+  updatePoints = (point) => this.points += point
+}
+>>>>>>> master
