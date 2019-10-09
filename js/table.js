@@ -54,14 +54,13 @@ class Table {
 
   validatePlayerPoints = () => {
     if (this.currentPlayer.points <= MAX_POINTS) return
-
     this.prepareTableForNewGame()
     this.notifyResult()
   }
 
-  upCardTemplate = (suite, name, type) => `<div class='card ${suite} card-${type}'><p>${name}</p></div>`
   downCardTemplate = () => `<div class='card card-down'></div>`
   pointsTemplate = points => `<div class='points-block'><p>${points}</p></div>`
+  upCardTemplate = (suite, name, type) => `<div class='card ${suite} card-${type}'><p>${name}</p></div>`
   notificationTemplate = message => `<div id='notification-block'><p>${message}</p></div>`
 
   renderCardsAndPoints = () => {
