@@ -28,11 +28,11 @@ class BlackJack {
 
 startGame(){
 const ttable = new Table()
-const Players = []
- Players.push( new Player('Player One', 'player'))
- Players.push( new Player('Dealer', 'dealer'))
+const players = []
+ players.push( new Player('Player One', 'player'))
+ players.push( new Player('Dealer', 'dealer'))
 
-console.log(Players[1])
+console.log(players[1])
 
 const deck1 = new Deck()
 deck1.build()
@@ -48,8 +48,8 @@ const decks = [
 ]
 console.log(decks[0])
 
-ttable.addPlayers(Players)
-// table.buildCardsFromDecks(decks)
+ttable.addPlayers(players)
+ttable.buildCardsFromDecks(decks)
 console.log(ttable)
   }
 }
