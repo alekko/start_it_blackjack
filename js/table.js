@@ -1,42 +1,111 @@
+const MAX_POINTS = 21
+
 class Table {
-  constructor(deckCount=2) {
+  constructor(deckCount = 2) {
     this.cards = []
     this.players = []
     this.deckCount = deckCount
     this.currentPlayer = null
     this.currentCard = null
-    this.maximumPoints = 21
   }
 
-  buildCardsFromDecks = () => {
+  player = () => this.players.find(player => player.type === 'player')
+  dealer = () => this.players.find(player => player.type === 'dealer')
+
+  addPlayers = () => this.players = [new Player('player'), new Player('dealer')]
+  setCurrentPlayer = player => this.currentPlayer = player
+  takeCardFromDeck = () => this.cards.pop()
+
+  buildCards = () => {
     for (let counter = 0; counter < this.deckCount; counter++) {
-      const newDeck = new Deck()
-      newDeck.build()
-      newDeck.shuffle()
-
-      newDeck.cards.forEach(card => this.cards.push(card))
+      const deck = new Deck()
+      deck.build()
+      deck.shuffle()
+      deck.cards.forEach(card => this.cards.push(card))
     }
-  }
-
-  addPlayers = players => {
-    players.forEach(player => this.players.push(player))
   }
 
   startGame = () => {
-    this.currentPlayer = this.players.find(player => player.type === 'player')
-  }
+    document.getElementById('before-game-actions').style.display = 'none'
+    document.getElementById('after-game-actions').style.display = 'inline-block'
 
-  takeCard = () => {
-    const currentCard = this.cards.pop()
-    this.currentPlayer.addCard(currentCard)
-    if (this.isGameOverForPlayer()){
-      this.switchToDealer()
+    if (document.getElementById('notification-block')) {
+      var elem = document.getElementById('notification-block')
+      elem.parentNode.removeChild(elem)
     }
+
+    this.buildCards()
+    this.addPlayers()
+    this.player().addCard(this.takeCardFromDeck())
+    this.player().addCard(this.takeCardFromDeck())
+    this.dealer().addCard(this.takeCardFromDeck())
+    const hiddenCard = this.takeCardFromDeck()
+    hiddenCard.type = 'down'
+    this.dealer().addCard(hiddenCard)
+    this.setCurrentPlayer(this.player())
+    this.renderCardsAndPoints()
   }
 
-  isGameOverForPlayer = () => this.currentPlayer.points > this.maximumPoints
+  takePlayerCard = () => {
+    this.player().addCard(this.takeCardFromDeck())
+    this.renderCardsAndPoints()
+    this.validatePlayerPoints()
+  }
 
-  switchToDealer = () => {
-    this.currentPlayer = this.players.find(player => player.type === 'dealer')
+  validatePlayerPoints = () => {
+    if (this.currentPlayer.points <= MAX_POINTS) return
+
+    this.prepareTableForNewGame()
+    this.notifyResult()
+  }
+
+  upCardTemplate = (suite, name, type) => `<div class='card ${suite} card-${type}'><p>${name}</p></div>`
+  downCardTemplate = () => `<div class='card card-down'></div>`
+  pointsTemplate = points => `<div class='points-block'><p>${points}</p></div>`
+  notificationTemplate = message => `<div id='notification-block'><p>${message}</p></div>`
+
+  renderCardsAndPoints = () => {
+    let playerDeck = document.getElementById('player')
+    let dealerDeck = document.getElementById('dealer')
+    playerDeck.innerHTML = dealerDeck.innerHTML = ''
+
+    this.player().cards.forEach(({ suite, name }) =>
+      playerDeck.innerHTML += this.upCardTemplate(suite, name)
+    )
+    playerDeck.innerHTML += this.pointsTemplate(this.player().getPoints())
+
+    this.dealer().cards.forEach(({ suite, name, type }) =>
+      dealerDeck.innerHTML += type === 'down' ? this.downCardTemplate() : this.upCardTemplate(suite, name)
+    )
+    dealerDeck.innerHTML += this.pointsTemplate(this.dealer().getPoints())
+  }
+
+  notifyResult = () => {
+    let result = ''
+
+    if (this.player().getPoints() === this.dealer().getPoints()) {
+      result = 'NEIZŠĶIRTS!'
+    } else if (this.player().getPoints() > this.dealer().getPoints() && this.player().getPoints() <= MAX_POINTS || this.dealer().getPoints() > MAX_POINTS) {
+      result = 'UZVARA!'
+    } else {
+      result = 'ZAUDĒJUMS!'
+    }
+    document.getElementById('game').innerHTML += this.notificationTemplate(result)
+  }
+
+  endTurn = () => {
+    this.currentPlayer = this.dealer()
+    this.currentPlayer.showHiddenCards()
+
+    while (this.currentPlayer.getPoints() < 19) this.currentPlayer.addCard(this.takeCardFromDeck())
+
+    this.renderCardsAndPoints()
+    this.notifyResult()
+    this.prepareTableForNewGame()
+  }
+
+  prepareTableForNewGame = () => {
+    document.getElementById('before-game-actions').style.display = 'inline-block'
+    document.getElementById('after-game-actions').style.display = 'none'
   }
 }

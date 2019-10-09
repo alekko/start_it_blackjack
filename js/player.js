@@ -1,18 +1,20 @@
 class Player {
-  constructor(name, type) {
+  constructor(type) {
+    this.type   = type
+    this.cards  = []
     this.points = 0
-    this.cards = []
-    this.type = type
-    this.name = name
   }
 
-  getName = () => this.name
-  setName = (name) => this.name = names
+  updatePoints = point => this.points += point
 
-  addCard = (card) => {
+  showHiddenCards = () => this.cards.map(card => card.type = 'up')
+
+  getPoints = () => this.cards.filter(card =>
+    card.type === 'up'
+  ).reduce((prev, next) => prev + next.value, 0)
+
+  addCard = card => {
     this.updatePoints(card.value)
     this.cards.push(card)
   }
-
-  updatePoints = (point) => this.points += point
 }

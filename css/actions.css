@@ -1,0 +1,17 @@
+.actions {
+  margin-top: 100px;
+  text-align: center;
+}
+
+.actions button {
+  font-size: 15px;
+  background: gray;
+  padding-top: 10px;
+  text-align: center;
+  border-radius: 10px;
+  padding-bottom: 10px;
+}
+
+#after-game-actions {
+  display: none;
+}

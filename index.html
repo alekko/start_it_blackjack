@@ -1,16 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset='UTF-8'>
     <title>21</title>
-    <script type="text/javascript" charset="UTF-8" src="js/player.js"></script>
-    <script type="text/javascript" charset="UTF-8" src="js/card.js"></script>
-    <script type="text/javascript" charset="UTF-8" src="js/deck.js"></script>
-    <script type="text/javascript" charset="UTF-8" src="js/table.js"></script>
-    <script type="text/javascript" charset="UTF-8" src="js/main.js"></script>
+    <script type='text/javascript' charset='UTF-8' src='js/player.js'></script>
+    <script type='text/javascript' charset='UTF-8' src='js/card.js'></script>
+    <script type='text/javascript' charset='UTF-8' src='js/deck.js'></script>
+    <script type='text/javascript' charset='UTF-8' src='js/table.js'></script>
+    <script type='text/javascript' charset='UTF-8' src='js/main.js'></script>
+    <link rel='stylesheet' href='css/main.css'>
   </head>
   <body>
-    <h1>BlackJack</h1>
-    <p id="demo"></p>
+    <div id='wrapper'>
+      <div id='game'>
+        <div id='dealer' class='hand'></div>
+          <div class='actions'>
+            <button id='before-game-actions' onClick='table.startGame()'>Izdalīt kārtis</button>
+            <div id='after-game-actions'>
+              <button onClick='table.takePlayerCard()'>Paņemt kārti</button>
+              <button onClick='table.endTurn()'>Beigt gājienu</button>
+              <button onClick='alert("Nav realizēts!")'>Dubultot</button>
+            </div>
+          </div>
+        <div id='player' class='hand'></div>
+      </div>
+    </div>
   </body>
 </html>
