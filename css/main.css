@@ -1,0 +1,73 @@
+body{
+    background: rgb(13,98,40);
+    background: radial-gradient(circle, rgba(13,98,40,1) 0%, rgba(1,49,23,1) 100%);
+}
+
+#main{
+    margin: 0 auto;
+    width: 800px;
+    height: 900px;
+}
+#btnt{
+    width: 200px;
+    font-size: 30px;
+    text-align: center;
+    background: #698676;
+    padding-top:10px;
+    padding-bottom:10px;
+}
+#btnt.exit{
+    position:relative;
+    margin-top:-10px;
+    left:750px;
+}
+#btnt.double{
+    margin: 0 auto;
+}
+#table{
+    width:300px;
+    margin: 0 auto;
+}
+#dealer{
+    height: 250px;
+}
+
+
+#player{
+    height: 250px;
+    margin-top:85px;
+}
+
+li{
+    display:inline-block;
+    position:relative;
+    width:100px;
+    height:160px;
+    background: white;
+    font-size: 100px;
+    text-align:center;
+    line-height: 1.5;
+}
+ li.first{
+    display:inline-block;
+    color:red;  
+}
+#btn{
+    width:200px;
+    font-size: 30px;
+    text-align: center;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    background: #008000;
+    color: #FFFFFF;
+}
+#btn.hit{
+    position: relative;
+    left:50px;
+    top: 333px;
+}
+#btn.stand{
+    position: relative;
+    left:305px;
+    top: -405px;
+}
