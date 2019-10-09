@@ -8,6 +8,7 @@ class BlackJack {
 
     this.divButtonBar = document.createElement("div");
     this.divButtonBar.setAttribute("class", "buttonbar");
+    
     let btnStartGame = document.createElement("button");
     btnStartGame.innerHTML = "Sākt spēli!";
     btnStartGame.onclick = (evt) => { 
@@ -26,6 +27,7 @@ class BlackJack {
     }
     this.divButtonBar.appendChild(btnStartGame);
     this.divButtonBar.appendChild(btnTakeCard);
+    this.divButtonBar.appendChild(btnStay);
 
     this.galds.appendChild(this.divButtonBar);
   }
