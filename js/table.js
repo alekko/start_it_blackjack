@@ -7,6 +7,7 @@ class Table {
     this.deckCount = deckCount
     this.currentPlayer = null
     this.currentCard = null
+    this.atlikums = null
   }
 
   player = () => this.players.find(player => player.type === 'player')
@@ -33,7 +34,7 @@ class Table {
       var elem = document.getElementById('notification-block')
       elem.parentNode.removeChild(elem)
     }
-
+    this.cards.length = 0 ? this.buildCards() : this.cards.length = 0
     this.buildCards()
     this.addPlayers()
     this.player().addCard(this.takeCardFromDeck())
@@ -66,8 +67,9 @@ class Table {
   renderCardsAndPoints = () => {
     let playerDeck = document.getElementById('player')
     let dealerDeck = document.getElementById('dealer')
+    let remainingDeck = document.getElementById('deck')
     playerDeck.innerHTML = dealerDeck.innerHTML = ''
-
+    remainingDeck.innerHTML=''
     this.player().cards.forEach(({ suite, name }) =>
       playerDeck.innerHTML += this.upCardTemplate(suite, name)
     )
@@ -77,6 +79,7 @@ class Table {
       dealerDeck.innerHTML += type === 'down' ? this.downCardTemplate() : this.upCardTemplate(suite, name)
     )
     dealerDeck.innerHTML += this.pointsTemplate(this.dealer().getPoints())
+    remainingDeck.innerHTML = this.cards.length
   }
 
   notifyResult = () => {
