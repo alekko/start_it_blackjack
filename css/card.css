@@ -14,7 +14,58 @@
   box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
   -webkit-box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
 }
-
+.card-d {
+  transform: rotate(30deg);
+  width: 75px;
+  float: left;
+  height: 100px;
+  background: #fff;
+  position: relative;
+  margin-right: 10px;
+  margin-left: -35px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+  -webkit-box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+}
+.card-d1 {
+  transform: rotate(45deg);
+  width: 75px;
+  float: left;
+  height: 100px;
+  background: #fff;
+  position: relative;
+  margin-right: 10px;
+  margin-left: -35px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+  -webkit-box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+}
+.card-d2 {
+  transform: rotate(60deg);
+  width: 75px;
+  float: left;
+  height: 100px;
+  background: #fff;
+  position: relative;
+  margin-right: 10px;
+  margin-left: -35px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+  -webkit-box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+}
+.card-d3 {
+  transform: rotate(90deg);
+  width: 75px;
+  float: left;
+  height: 100px;
+  background: #fff;
+  position: relative;
+  margin-right: 10px;
+  margin-left: -35px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+  -webkit-box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+}
 #player {
   height: 100px;
   margin-top: 100px;
@@ -110,8 +161,9 @@
   background: black;
   text-align: center;
   position: relative;
+  top:300px;
   border-radius: 5px;
-  left: calc(50% - 30px);
+  left: 15%;
 }
 
 .d-points-block p {
