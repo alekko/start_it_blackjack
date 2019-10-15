@@ -7,7 +7,6 @@ class Table {
     this.deckCount = deckCount
     this.currentPlayer = null
     this.currentCard = null
-    this.atlikums = null
   }
 
   player = () => this.players.find(player => player.type === 'player')
