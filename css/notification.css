@@ -1,10 +1,36 @@
 #notification-block {
   top: 0;
-  width: 100%;
+  width: 200px;
+  height: 50px;
   opacity: 0.8;
   color: white;
   font-weight: bold;
   text-align: center;
   position: absolute;
   background: darkgreen;
+  animation: notification 5s;
 }
+
+#notification-block-lose {
+  top: 0;
+  width: 200px;
+  height: 50px;
+  opacity: 0.8;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  position: absolute;
+  background: darkred;
+  animation: notification-lose 5s;
+}
+
+ @keyframes notification {
+   from {transform: rotate(0deg); top: 0px; left: 0px; background: white;}
+   to {transform: rotate(360deg); top: 40%; left:40%; background: darkgreen;}
+ }
+
+ @keyframes notification-lose {
+  from {transform: rotate(0deg); top: 0px; left: 0px; background: white;}
+  to {transform: rotate(360deg); top: 40%; left:40%; background: darkred;}
+}
+/*pilnai laimei būtu jāieliek animācijas sintakse Safari, Mozillas vecākajai versijai*/
