@@ -33,6 +33,10 @@ class Table {
       var elem = document.getElementById('notification-block')
       elem.parentNode.removeChild(elem)
     }
+    if (document.getElementById('notification-block-lose')) {
+      var elemLose = document.getElementById('notification-block-lose')
+      elemLose.parentNode.removeChild(elemLose)
+    }
 
     this.buildCards()
     this.addPlayers()
@@ -60,16 +64,29 @@ class Table {
 
   downCardTemplate = () => `<div class='card card-down'></div>`
   pointsTemplate = points => `<div class='points-block'><p>${points}</p></div>`
-  upCardTemplate = (suite, name, type) => `<div class='card ${suite} card-${type}'><p>${name}</p></div>`
+  upCardTemplate = (suite, name, type) => `<div class='card ${suite}'><p>${name}</p></div>`
+  upCardTemplateNonactive = (suite, name, type) => `<div class='card-nonactive ${suite}'><p>${name}</p></div>`
   notificationTemplate = message => `<div id='notification-block'><p>${message}</p></div>`
+  notificationTemplateLose = message => `<div id='notification-block-lose'><p>${message}</p></div>`
 
   renderCardsAndPoints = () => {
     let playerDeck = document.getElementById('player')
     let dealerDeck = document.getElementById('dealer')
     playerDeck.innerHTML = dealerDeck.innerHTML = ''
 
+    if (this.currentPlayer == this.player()) {
     this.player().cards.forEach(({ suite, name }) =>
       playerDeck.innerHTML += this.upCardTemplate(suite, name)
+    )
+    playerDeck.innerHTML += this.pointsTemplate(this.player().getPoints())
+
+    this.dealer().cards.forEach(({ suite, name, type }) =>
+      dealerDeck.innerHTML += type === 'down' ? this.downCardTemplate() : this.upCardTemplateNonactive(suite, name)
+    )
+    dealerDeck.innerHTML += this.pointsTemplate(this.dealer().getPoints())
+  } else {
+    this.player().cards.forEach(({ suite, name }) =>
+      playerDeck.innerHTML += this.upCardTemplateNonactive(suite, name)
     )
     playerDeck.innerHTML += this.pointsTemplate(this.player().getPoints())
 
@@ -77,6 +94,7 @@ class Table {
       dealerDeck.innerHTML += type === 'down' ? this.downCardTemplate() : this.upCardTemplate(suite, name)
     )
     dealerDeck.innerHTML += this.pointsTemplate(this.dealer().getPoints())
+    }
   }
 
   notifyResult = () => {
@@ -84,12 +102,14 @@ class Table {
 
     if (this.player().getPoints() === this.dealer().getPoints()) {
       result = 'NEIZŠĶIRTS!'
+      document.getElementById('game').innerHTML += this.notificationTemplate(result)
     } else if (this.player().getPoints() > this.dealer().getPoints() && this.player().getPoints() <= MAX_POINTS || this.dealer().getPoints() > MAX_POINTS) {
       result = 'UZVARA!'
+      document.getElementById('game').innerHTML += this.notificationTemplate(result)
     } else {
       result = 'ZAUDĒJUMS!'
+      document.getElementById('game').innerHTML += this.notificationTemplateLose(result)
     }
-    document.getElementById('game').innerHTML += this.notificationTemplate(result)
   }
 
   endTurn = () => {
