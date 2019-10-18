@@ -7,6 +7,8 @@ class Table {
     this.deckCount = deckCount
     this.currentPlayer = null
     this.currentCard = null
+    this.playerName = null
+    this.dealerName = 'Dīleris'
   }
 
   player = () => this.players.find(player => player.type === 'player')
@@ -34,6 +36,9 @@ class Table {
       elem.parentNode.removeChild(elem)
     }
 
+    // Ask user to enter his name
+    this.setPlayerName()
+
     this.buildCards()
     this.addPlayers()
     this.player().addCard(this.takeCardFromDeck())
@@ -47,6 +52,7 @@ class Table {
   }
 
   takePlayerCard = () => {
+    console.log("Speletajs panjem kaarti!") //debug log for grey out cards solution
     this.player().addCard(this.takeCardFromDeck())
     this.renderCardsAndPoints()
     this.validatePlayerPoints()
@@ -62,6 +68,8 @@ class Table {
   pointsTemplate = points => `<div class='points-block'><p>${points}</p></div>`
   upCardTemplate = (suite, name, type) => `<div class='card ${suite} card-${type}'><p>${name}</p></div>`
   notificationTemplate = message => `<div id='notification-block'><p>${message}</p></div>`
+  nameTemplate = playerName => `<div class='player-name'><p>${playerName}</p></div>` // template for user name
+
 
   renderCardsAndPoints = () => {
     let playerDeck = document.getElementById('player')
@@ -72,11 +80,13 @@ class Table {
       playerDeck.innerHTML += this.upCardTemplate(suite, name)
     )
     playerDeck.innerHTML += this.pointsTemplate(this.player().getPoints())
+    playerDeck.innerHTML += this.nameTemplate(this.playerName)
 
     this.dealer().cards.forEach(({ suite, name, type }) =>
       dealerDeck.innerHTML += type === 'down' ? this.downCardTemplate() : this.upCardTemplate(suite, name)
     )
     dealerDeck.innerHTML += this.pointsTemplate(this.dealer().getPoints())
+    dealerDeck.innerHTML += this.nameTemplate(this.dealerName)
   }
 
   notifyResult = () => {
@@ -106,5 +116,14 @@ class Table {
   prepareTableForNewGame = () => {
     document.getElementById('before-game-actions').style.display = 'inline-block'
     document.getElementById('after-game-actions').style.display = 'none'
+  }
+
+  setPlayerName = () => {
+    var name = prompt("Ievadi savu vārdu:", "Spēlētājs1");
+    if (name == null || name == "") {
+      this.playerName = 'Spēlētājs1'
+    } else {
+      this.playerName = name
+    }
   }
 }

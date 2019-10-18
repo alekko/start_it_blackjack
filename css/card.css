@@ -100,3 +100,20 @@
   font-size: 25px;
   position: absolute;
 }
+
+.player-name p {
+  font-size: 15px;
+  background: gray;
+  padding-top: 10px;
+  text-align: center;
+  border-radius: 10px;
+  padding-bottom: 10px;
+  bottom: -100px;
+  border-style:solid;
+  border-color: white;
+  border-width: 1px;
+  left: calc(50% - 15px);
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  position: absolute;
+}
