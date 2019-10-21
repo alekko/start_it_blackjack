@@ -119,6 +119,7 @@ class Table {
 
     if (type !== 'start') return
     this.resultNotified = false
+    document.getElementById('dealer-chip').style.display = 'block'
     this.playerDeck().innerHTML = this.dealerDeck().innerHTML = ''
   }
 }
