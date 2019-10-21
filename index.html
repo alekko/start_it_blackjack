@@ -15,11 +15,11 @@
       <div id='game'>
         <div id='dealer' class='hand'></div>
           <div class='actions'>
-            <button id='before-game-actions' onClick='table.startGame()'>Izdalīt kārtis</button>
+            <button id='before-game-actions' onClick='table.startGame()'>Start</button>
             <div id='after-game-actions'>
-              <button onClick='table.takePlayerCard()'>Paņemt kārti</button>
-              <button onClick='table.endTurn()'>Beigt gājienu</button>
-              <button onClick='alert("Nav realizēts!")'>Dubultot</button>
+              <button onClick='table.takePlayerCard()'>Hit</button>
+              <button class="double" onClick='table.double()'>Double</button>
+              <button onClick='table.endTurn()'>Stand</button>
             </div>
           </div>
         <div id='player' class='hand'></div>

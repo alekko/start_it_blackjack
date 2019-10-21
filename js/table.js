@@ -7,6 +7,7 @@ class Table {
     this.deckCount = deckCount
     this.currentPlayer = null
     this.currentCard = null
+    this.bet = 10
   }
 
   player = () => this.players.find(player => player.type === 'player')
@@ -63,9 +64,10 @@ class Table {
   }
 
   downCardTemplate = () => `<div class='card card-down'></div>`
+  upCardTemplate = (suite, name) => `<div class='card ${suite}'><p>${name}</p></div>`
   pointsTemplate = points => `<div class='points-block'><p>${points}</p></div>`
-  upCardTemplate = (suite, name, type) => `<div class='card ${suite}'><p>${name}</p></div>`
-  upCardTemplateNonactive = (suite, name, type) => `<div class='card-nonactive ${suite}'><p>${name}</p></div>`
+  upCardTemplateNonactive = (suite, name) => `<div class='card-nonactive ${suite}'><p>${name}</p></div>`
+  cashTemplate = cash => `<div class='cash'><p>${cash}</p></div>`
   notificationTemplate = message => `<div id='notification-block'><p>${message}</p></div>`
   notificationTemplateLose = message => `<div id='notification-block-lose'><p>${message}</p></div>`
 
@@ -75,52 +77,75 @@ class Table {
     playerDeck.innerHTML = dealerDeck.innerHTML = ''
 
     if (this.currentPlayer == this.player()) {
-    this.player().cards.forEach(({ suite, name }) =>
-      playerDeck.innerHTML += this.upCardTemplate(suite, name)
-    )
-    playerDeck.innerHTML += this.pointsTemplate(this.player().getPoints())
+      this.player().cards.forEach(({ suite, name }) =>
+        playerDeck.innerHTML += this.upCardTemplate(suite, name)
+      )
+      playerDeck.innerHTML += this.pointsTemplate(this.player().getPoints())
+      playerDeck.innerHTML += this.cashTemplate('cash goes here')
+      this.dealer().cards.forEach(({ suite, name, type }) =>
+        dealerDeck.innerHTML += type === 'down' ? this.downCardTemplate() : this.upCardTemplateNonactive(suite, name)
+      )
+      dealerDeck.innerHTML += this.pointsTemplate(this.dealer().getPoints())
+    } else {
+      this.player().cards.forEach(({ suite, name }) =>
+        playerDeck.innerHTML += this.upCardTemplateNonactive(suite, name)
+      )
+      playerDeck.innerHTML += this.pointsTemplate(this.player().getPoints())
 
-    this.dealer().cards.forEach(({ suite, name, type }) =>
-      dealerDeck.innerHTML += type === 'down' ? this.downCardTemplate() : this.upCardTemplateNonactive(suite, name)
-    )
-    dealerDeck.innerHTML += this.pointsTemplate(this.dealer().getPoints())
-  } else {
-    this.player().cards.forEach(({ suite, name }) =>
-      playerDeck.innerHTML += this.upCardTemplateNonactive(suite, name)
-    )
-    playerDeck.innerHTML += this.pointsTemplate(this.player().getPoints())
-
-    this.dealer().cards.forEach(({ suite, name, type }) =>
-      dealerDeck.innerHTML += type === 'down' ? this.downCardTemplate() : this.upCardTemplate(suite, name)
-    )
-    dealerDeck.innerHTML += this.pointsTemplate(this.dealer().getPoints())
+      this.dealer().cards.forEach(({ suite, name, type }) =>
+        dealerDeck.innerHTML += type === 'down' ? this.downCardTemplate() : this.upCardTemplate(suite, name)
+      )
+      dealerDeck.innerHTML += this.pointsTemplate(this.dealer().getPoints())
     }
   }
 
   notifyResult = () => {
-    let result = ''
+    let notificationMessage = ''
+    const win = [
+      'Malacis!!!',
+      'Apsveicu, šī bija laba partija!',
+      'Šo gan es negaidīju. Apsveisu!'
+    ]
+    const lose = [
+      'Nākamreiz Tev noteikti paveiksies!!!',
+      'Vienmēr uzvarēt nevar',
+      'Ši nebija Tava partija ;)'
+    ]
+
+    const draw = [
+      'Ne uzvara ne zaudējums.',
+      'Nebēdā, neizsķirts tomēr nav zaudējums'
+    ]
 
     if (this.player().getPoints() === this.dealer().getPoints()) {
-      result = 'NEIZŠĶIRTS!'
-      document.getElementById('game').innerHTML += this.notificationTemplate(result)
+      notificationMessage = draw[Math.floor(Math.random() * draw.length)]
     } else if (this.player().getPoints() > this.dealer().getPoints() && this.player().getPoints() <= MAX_POINTS || this.dealer().getPoints() > MAX_POINTS) {
-      result = 'UZVARA!'
-      document.getElementById('game').innerHTML += this.notificationTemplate(result)
+      notificationMessage = win[Math.floor(Math.random() * win.length)]
     } else {
-      result = 'ZAUDĒJUMS!'
-      document.getElementById('game').innerHTML += this.notificationTemplateLose(result)
+      notificationMessage = lose[Math.floor(Math.random() * lose.length)]
     }
+
+    document.getElementById('game').innerHTML += this.notificationTemplateLose(notificationMessage)
   }
 
   endTurn = () => {
     this.currentPlayer = this.dealer()
     this.currentPlayer.showHiddenCards()
 
-    while (this.currentPlayer.getPoints() < 19) this.currentPlayer.addCard(this.takeCardFromDeck())
+    while (this.currentPlayer.getPoints() < 19)
+      this.currentPlayer.addCard(this.takeCardFromDeck())
 
     this.renderCardsAndPoints()
     this.notifyResult()
     this.prepareTableForNewGame()
+  }
+
+  double = () => {
+    this.player().addCard(this.takeCardFromDeck())
+    this.renderCardsAndPoints()
+    this.validatePlayerPoints()
+    if (this.player().getPoints() >= 21)
+      this.endTurn()
   }
 
   prepareTableForNewGame = () => {
