@@ -8,7 +8,7 @@ class Player {
 
   updatePoints = point => this.points += point
 
-  updateCash = () => this.cash += bet
+  updateCash = (bet) => this.cash += bet
 
   showHiddenCards = () => this.cards.map(card => card.type = 'up')
 
