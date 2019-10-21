@@ -3,12 +3,14 @@ class Player {
     this.type   = type
     this.cards  = []
     this.points = 0
-    this.cash = 100;
+    this.cash = 100
   }
 
   updatePoints = point => this.points += point
 
   updateCash = (bet) => this.cash += bet
+
+  getCash = () => this.cash;
 
   showHiddenCards = () => this.cards.map(card => card.type = 'up')
 
