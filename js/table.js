@@ -4,11 +4,15 @@ class Table {
     this.players        = []
     this.deckCount      = deckCount
     this.resultNotified = false
+    this.playerCash     = 100
   }
 
   player = () => this.players.find(player => player.type === 'player')
   dealer = () => this.players.find(player => player.type === 'dealer')
   addPlayers = () => this.players = [new Player('player'), new Player('dealer')]
+
+  updatePlayerCash = bet => this.playerCash += bet
+  getPlayerCash = () => this.playerCash
 
   playerDeck = () => document.getElementById('player')
   dealerDeck = () => document.getElementById('dealer')
@@ -36,6 +40,11 @@ class Table {
     playerDeck.innerHTML += cardType === 'down'
       ? downCardTemplate()
       : upCardTemplate(suite, name, 'animated fadeInLeft')
+
+    if (player.type === 'player') {
+      removeElementById('player-cash')
+      document.getElementById('game').innerHTML += cashTemplate(this.getPlayerCash())
+    }
   }
 
   startGame = () => {
@@ -43,6 +52,7 @@ class Table {
     this.prepareTableForGame('start')
 
     this.addPlayers()
+    this.updatePlayerCash(-10)
 
     this.addCardTo(this.player())
     this.addCardTo(this.player())
@@ -89,8 +99,14 @@ class Table {
     const dp = this.dealer().getPoints()
     let result = ''
 
-    if (pp > dp && pp <= MAX_POINTS || dp > MAX_POINTS) result = 'win'
-    else if (pp === dp) result = 'draw'
+    if (pp > dp && pp <= MAX_POINTS || dp > MAX_POINTS){
+      result = 'win'
+      this.updatePlayerCash(+20)
+    }
+    else if (pp === dp){
+      result = 'draw'
+      this.updatePlayerCash(+10)
+    }
     else result = 'lose'
 
     document.getElementById('game').innerHTML += notificationTemplate(getNotificationMessage(result), result)
