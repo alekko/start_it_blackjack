@@ -53,9 +53,6 @@ class Table {
     this.validatePlayerPoints()
   }
 
-  
-
-
   validatePlayerPoints = () => {
     if (this.currentPlayer.points <= MAX_POINTS) return
     this.prepareTableForNewGame()
@@ -64,7 +61,7 @@ class Table {
 
   downCardTemplate = () => `<div class='card card-down'></div>`
   pointsTemplate = points => `<div class='points-block'><p>${points}</p></div>`
-  cashTemplate = cash => `<div class='nauda'><p>${points}</p></div>`
+  cashTemplate = cash => `<div class='cash'><p>${cash}</p></div>`
   upCardTemplate = (suite, name, type) => `<div class='card ${suite} card-${type}'><p>${name}</p></div>`
   notificationTemplate = message => `<div id='notification-block'><p>${message}</p></div>`
 
@@ -77,7 +74,7 @@ class Table {
       playerDeck.innerHTML += this.upCardTemplate(suite, name)
     )
     playerDeck.innerHTML += this.pointsTemplate(this.player().getPoints())
-
+    playerDeck.innerHTML += this.cashTemplate('cash goes here')
     this.dealer().cards.forEach(({ suite, name, type }) =>
       dealerDeck.innerHTML += type === 'down' ? this.downCardTemplate() : this.upCardTemplate(suite, name)
     )
@@ -86,8 +83,17 @@ class Table {
 
   notifyResult = () => {
     let result = ''
-    const win = ["Malacis!!!", "Apsveicu, šī bija laba partija!", "Šo gan es negaidīju. Apsveisu!"]
-    const lose = ["Nākamreiz Tev noteikti paveiksies!!!", "Vienmēr uzvarēt nevar", "Ši nebija Tava partija ;)"]
+    const win = [
+      'Malacis!!!',
+      'Apsveicu, šī bija laba partija!',
+      'Šo gan es negaidīju. Apsveisu!'
+    ]
+    const lose = [
+      'Nākamreiz Tev noteikti paveiksies!!!',
+      'Vienmēr uzvarēt nevar',
+      'Ši nebija Tava partija ;)'
+    ]
+
     if (this.player().getPoints() === this.dealer().getPoints()) {
       result = 'NEIZŠĶIRTS!'
     } else if (this.player().getPoints() > this.dealer().getPoints() && this.player().getPoints() <= MAX_POINTS || this.dealer().getPoints() > MAX_POINTS) {
@@ -102,19 +108,20 @@ class Table {
     this.currentPlayer = this.dealer()
     this.currentPlayer.showHiddenCards()
 
-    while (this.currentPlayer.getPoints() < 19) this.currentPlayer.addCard(this.takeCardFromDeck())
+    while (this.currentPlayer.getPoints() < 19)
+      this.currentPlayer.addCard(this.takeCardFromDeck())
 
     this.renderCardsAndPoints()
     this.notifyResult()
     this.prepareTableForNewGame()
   }
+
   double = () => {
     this.player().addCard(this.takeCardFromDeck())
     this.renderCardsAndPoints()
     this.validatePlayerPoints()
-    if (this.player().getPoints()< 21 ){
-    this.endTurn()
-    }
+    if (this.player().getPoints() >= 21)
+      this.endTurn()
   }
 
   prepareTableForNewGame = () => {
