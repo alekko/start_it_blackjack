@@ -7,8 +7,12 @@
     <script type='text/javascript' charset='UTF-8' src='js/card.js'></script>
     <script type='text/javascript' charset='UTF-8' src='js/deck.js'></script>
     <script type='text/javascript' charset='UTF-8' src='js/table.js'></script>
+    <script type='text/javascript' charset='UTF-8' src='js/templates.js'></script>
+    <script type='text/javascript' charset='UTF-8' src='js/notifications.js'></script>
+    <script type='text/javascript' charset='UTF-8' src='js/helpers.js'></script>
     <script type='text/javascript' charset='UTF-8' src='js/main.js'></script>
     <link rel='stylesheet' href='css/main.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
   </head>
   <body>
     <div id='wrapper'>
@@ -17,9 +21,9 @@
           <div class='actions'>
             <button id='before-game-actions' onClick='table.startGame()'>Start</button>
             <div id='after-game-actions'>
-              <button onClick='table.takePlayerCard()'>Hit</button>
+              <button onClick='table.hit()'>Hit</button>
               <button class="double" onClick='table.double()'>Double</button>
-              <button onClick='table.endTurn()'>Stand</button>
+              <button onClick='table.stand()'>Stand</button>
             </div>
           </div>
         <div id='player' class='hand'></div>
