@@ -7,6 +7,7 @@ class Table {
     this.deckCount = deckCount
     this.currentPlayer = null
     this.currentCard = null
+    this.bet = 10
   }
 
   player = () => this.players.find(player => player.type === 'player')
@@ -52,6 +53,9 @@ class Table {
     this.validatePlayerPoints()
   }
 
+  
+
+
   validatePlayerPoints = () => {
     if (this.currentPlayer.points <= MAX_POINTS) return
     this.prepareTableForNewGame()
@@ -60,6 +64,7 @@ class Table {
 
   downCardTemplate = () => `<div class='card card-down'></div>`
   pointsTemplate = points => `<div class='points-block'><p>${points}</p></div>`
+  cashTemplate = cash => `<div class='nauda'><p>${points}</p></div>`
   upCardTemplate = (suite, name, type) => `<div class='card ${suite} card-${type}'><p>${name}</p></div>`
   notificationTemplate = message => `<div id='notification-block'><p>${message}</p></div>`
 
@@ -81,13 +86,14 @@ class Table {
 
   notifyResult = () => {
     let result = ''
-
+    const win = ["Malacis!!!", "Apsveicu, šī bija laba partija!", "Šo gan es negaidīju. Apsveisu!"]
+    const lose = ["Nākamreiz Tev noteikti paveiksies!!!", "Vienmēr uzvarēt nevar", "Ši nebija Tava partija ;)"]
     if (this.player().getPoints() === this.dealer().getPoints()) {
       result = 'NEIZŠĶIRTS!'
     } else if (this.player().getPoints() > this.dealer().getPoints() && this.player().getPoints() <= MAX_POINTS || this.dealer().getPoints() > MAX_POINTS) {
-      result = 'UZVARA!'
+      result = win[Math.floor(Math.random() * win.length)]
     } else {
-      result = 'ZAUDĒJUMS!'
+      result = lose[Math.floor(Math.random() * lose.length)]
     }
     document.getElementById('game').innerHTML += this.notificationTemplate(result)
   }
@@ -101,6 +107,14 @@ class Table {
     this.renderCardsAndPoints()
     this.notifyResult()
     this.prepareTableForNewGame()
+  }
+  double = () => {
+    this.player().addCard(this.takeCardFromDeck())
+    this.renderCardsAndPoints()
+    this.validatePlayerPoints()
+    if (this.player().getPoints()< 21 ){
+    this.endTurn()
+    }
   }
 
   prepareTableForNewGame = () => {

@@ -3,14 +3,28 @@
   text-align: center;
 }
 
-.actions button {
-  font-size: 15px;
-  background: gray;
-  padding-top: 10px;
+button {
+  width:200px;
+  font-size: 30px;
   text-align: center;
-  border-radius: 10px;
-  padding-bottom: 10px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  background: #008000;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  border: 0px;
 }
+
+.double{
+  background: #698676;
+  padding-top:10px;
+  padding-bottom:10px;
+  margin-left:100px;
+  margin-right:100px;
+  border: 0px;
+  color: #000000;
+}
+
 
 #after-game-actions {
   display: none;
