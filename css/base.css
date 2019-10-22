@@ -43,7 +43,8 @@ body{
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 }
 
-.chip{
+#dealer-chip {
+  display: none;
   width: 100px;
   height: 100px;
   color: #000000;
@@ -52,8 +53,9 @@ body{
   background:rgba(255, 255, 255, 0.69);
   text-align: center;
   line-height: 4;
-  position: relative;
+  position: absolute;
   border: 2px solid black;
   border-radius: 100px;
   left: 390px;
 }
+
