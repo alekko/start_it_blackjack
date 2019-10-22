@@ -8,6 +8,7 @@ class Table {
     this.currentPlayer = null
     this.currentCard = null
     this.bet = 10
+    this.cardsInDeck = deckCount * 52 - 4
   }
 
   player = () => this.players.find(player => player.type === 'player')
@@ -34,7 +35,7 @@ class Table {
       var elem = document.getElementById('notification-block')
       elem.parentNode.removeChild(elem)
     }
-
+    //this.player.cash(CASH)
     this.buildCards()
     this.addPlayers()
     this.player().addCard(this.takeCardFromDeck())
@@ -50,9 +51,15 @@ class Table {
 
   takePlayerCard = () => {
     this.player().addCard(this.takeCardFromDeck())
+    this.decCardsInDeck()
     this.renderCardsAndPoints()
     this.validatePlayerPoints()
     
+    
+  }
+
+  decCardsInDeck = () =>{
+    this.cardsInDeck = this.cardsInDeck - 1
   }
 
   validatePlayerPoints = () => {
@@ -63,20 +70,24 @@ class Table {
 
   downCardTemplate = () => `<div class='card card-down'></div>`
   pointsTemplate = points => `<div class='points-block'><p>${points}</p></div>`
+  deckTemplate = cardsInDeck => `<div class='cardsindeck'>${cardsInDeck}</div>`
   upCardTemplate = (suite, name, type) => `<div class='card ${suite} card-${type}'><p>${name}</p></div>`
   notificationTemplate = message => `<div id='notification-block'><p>${message}</p></div>`
   cashTemplate = cash => `<div class='cash'>CASH:<b>$${cash}</b></div>`
+  
 
   renderCardsAndPoints = () => {
     let playerDeck = document.getElementById('player')
     let dealerDeck = document.getElementById('dealer')
-    playerDeck.innerHTML = dealerDeck.innerHTML = ''
+    let deck = document.getElementById('deck')
+    deck.innerHtml = playerDeck.innerHTML = dealerDeck.innerHTML = ''
 
     this.player().cards.forEach(({ suite, name }) =>
       playerDeck.innerHTML += this.upCardTemplate(suite, name)
     )
     playerDeck.innerHTML += this.pointsTemplate(this.player().getPoints())
     playerDeck.innerHTML += this.cashTemplate(this.player().getCash())
+    deck.innerHTML += this.deckTemplate(this.cardsInDeck)
     this.dealer().cards.forEach(({ suite, name, type }) =>
       dealerDeck.innerHTML += type === 'down' ? this.downCardTemplate() : this.upCardTemplate(suite, name)
     )
