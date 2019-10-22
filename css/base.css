@@ -20,12 +20,36 @@ body{
 
 }
 
+#deck {
+  position: absolute;
+  left: 1200px;
+  top: 70px;
+  width: 110px;
+  height: 120px;
+  background: url(img/deck.svg);
+}
+
+.cardsindeck{
+  color: white;
+  bottom: 33px;
+  font-size: 20px;
+  text-align: center;
+  position: absolute;
+  left: 62px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
 #dealer-chip {
   display: none;
   width: 100px;
   height: 100px;
   color: #000000;
-  top: 60px;
+  top: 120px;
   font-size: 25px;
   background:rgba(255, 255, 255, 0.69);
   text-align: center;
@@ -33,5 +57,5 @@ body{
   position: absolute;
   border: 2px solid black;
   border-radius: 100px;
-  left: 350px;
+  left: 1000px;
 }

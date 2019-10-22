@@ -13,9 +13,11 @@ class Table {
 
   updatePlayerCash = bet => this.playerCash += bet
   getPlayerCash = () => this.playerCash
+  
 
   playerDeck = () => document.getElementById('player')
   dealerDeck = () => document.getElementById('dealer')
+  deckTemplate = () => document.getElementById()
 
   buildCards = () => {
     for (let counter = 0; counter < this.deckCount; counter++) {
@@ -84,6 +86,14 @@ class Table {
     this.addCardTo(this.player())
     this.validatePlayerPoints()
     this.endTurn()
+  }
+
+  validateForAce = () =>{
+    forEach.player().cards()
+      if (this.player.card === 11 && this.player.getPoints > 21){
+        this.player.card = 1
+        this.validatePlayerPoints()
+      }
   }
 
   validatePlayerPoints = () => {
