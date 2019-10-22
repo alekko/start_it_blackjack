@@ -1,1 +1,1 @@
-# IT Izglītības fonda - start(it) ietvaros izstrādātā spēle 'Blackjack', jeb '21'.
+# IT Izglītības fonda - start(it) ietvaros izstrādātā JS spēle 'Blackjack', jeb 'Acīte'.
