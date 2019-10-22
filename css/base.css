@@ -10,8 +10,8 @@ body{
 .cash {
   font-size:25px;
   position: absolute;
-  left: -355px;
-  top: -30px;
+  left: 0;
+  bottom: 0;
   width: 200px;
   height: 50px;
   background: #698676;
@@ -28,7 +28,11 @@ body{
   background: url(img/deck.svg);
 }
 
-.cardsindeck{
+#deck-points {
+  padding-top: 40px;
+}
+
+.cards-indeck {
   color: white;
   bottom: 33px;
   font-size: 20px;

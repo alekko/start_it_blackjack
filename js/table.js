@@ -3,16 +3,15 @@ class Table {
     this.cards = []
     this.players = []
     this.deckCount = deckCount
-    this.currentPlayer = null
-    this.currentCard = null
     this.bet = 10
+    this.playerCash = 100
   }
 
   player = () => this.players.find(player => player.type === 'player')
   dealer = () => this.players.find(player => player.type === 'dealer')
   addPlayers = () => this.players = [new Player('player'), new Player('dealer')]
 
-  updatePlayerCash = bet => this.playerCash += bet
+  updatePlayerCash = bet => this.playerCash -= bet
   getPlayerCash = () => this.playerCash
 
   playerDeck = () => document.getElementById('player')
@@ -27,17 +26,26 @@ class Table {
     }
   }
 
-  addCardTo = (player, cardType='up') => {
+  setLeftCards = () => {
+    document.getElementById('deck-points').innerHTML = ''
+    document.getElementById('deck-points').innerHTML = this.cards.length
+  }
+
+  addCardTo = (player, cardType = 'up') => {
     removePreviousCardsAnimations()
+
+    const { type } = player
+
     const card = this.cards.pop()
     card.type = cardType
     player.addCard(card)
 
-    const playerDeck = this[`${player.type}Deck`]()
+    const playerDeck = this[`${type}Deck`]()
     const { suite, name } = card
 
-    removeElementById(`${player.type}-points`)
-    playerDeck.innerHTML += pointsTemplate('dealer', player.getPoints())
+    removeElementById(`${type}-points`)
+
+    playerDeck.innerHTML += pointsTemplate(type, player.getPoints())
     playerDeck.innerHTML += cardType === 'down'
       ? downCardTemplate()
       : upCardTemplate(suite, name, 'animated fadeInLeft')
@@ -46,10 +54,14 @@ class Table {
       removeElementById('player-cash')
       document.getElementById('game').innerHTML += cashTemplate(this.getPlayerCash())
     }
+
+    this.setLeftCards()
   }
 
   startGame = () => {
     removeElementById('notification-block')
+
+    this.setLeftCards()
     this.prepareTableForGame('start')
     this.addPlayers()
     this.updatePlayerCash(-10)
@@ -88,6 +100,7 @@ class Table {
   double = () => {
     this.addCardTo(this.player())
     this.validatePlayerPoints()
+    this.currentBet = 20
     this.stand()
   }
 
@@ -104,16 +117,11 @@ class Table {
     const dp = this.dealer().getPoints()
     let result = ''
 
-    if (pp > dp && pp <= MAX_POINTS || dp > MAX_POINTS) {
-      result = 'win'
-      this.updatePlayerCash(+20)
-    }
-    else if (pp === dp) {
-      result = 'draw'
-      this.updatePlayerCash(+10)
-    }
+    if (pp > dp && pp <= MAX_POINTS || dp > MAX_POINTS) result = 'win'
+    else if (pp === dp) result = 'draw'
     else result = 'lose'
 
+    this.updatePlayerCash(this.currentBet)
     document.getElementById('game').innerHTML += notificationTemplate(getNotificationMessage(result), result)
     this.resultNotified = true
   }
