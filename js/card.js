@@ -1,8 +1,10 @@
 class Card {
-  constructor(value, name, suite, type= 'up') {
+  constructor(value, name, suite, type = 'up') {
     this.name  = name
-    this.value = value
-    this.suite = suite
     this.type  = type
+    this.suite = suite
+    this.value = value
   }
+
+  setValue = (value) => this.value = value
 }
