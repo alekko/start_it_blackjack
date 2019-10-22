@@ -3,10 +3,12 @@
   text-align: center;
 }
 
-button:focus {outline:0;}
+button:focus {
+  outline:0;
+}
 
 button {
-  width:200px;
+  width: 200px;
   font-size: 30px;
   text-align: center;
   padding-top: 25px;
@@ -17,11 +19,11 @@ button {
   border: 0px;
 }
 
-.double{
+.double {
   background: #698676;
-  padding-top:10px;
-  padding-bottom:10px;
-  margin-left:100px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-left: 100px;
   margin-right:100px;
   border: 0px;
   color: #000000;
@@ -30,9 +32,9 @@ button {
 
 #after-game-actions {
   display: none;
+  margin: 50px;
 }
 
 #before-game-actions {
-  position:relative;
-  top: 50px;
+  margin: 50px;
 }

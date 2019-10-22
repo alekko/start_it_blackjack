@@ -3,21 +3,20 @@ class Table {
     this.cards = []
     this.players = []
     this.deckCount = deckCount
-    this.bet = 10
     this.playerCash = 100
+    this.currentBet = null
   }
 
   player = () => this.players.find(player => player.type === 'player')
   dealer = () => this.players.find(player => player.type === 'dealer')
   addPlayers = () => this.players = [new Player('player'), new Player('dealer')]
 
-  updatePlayerCash = bet => this.playerCash -= bet
-  getPlayerCash = () => this.playerCash
-
-  playerDeck = () => document.getElementById('player')
-  dealerDeck = () => document.getElementById('dealer')
+  playerDeck  = () => document.getElementById('player')
+  dealerDeck  = () => document.getElementById('dealer')
+  gameWrapper = () => document.getElementById('game')
 
   buildCards = () => {
+    this.cards = []
     for (let counter = 0; counter < this.deckCount; counter++) {
       const deck = new Deck()
       deck.build()
@@ -26,45 +25,48 @@ class Table {
     }
   }
 
-  setLeftCards = () => {
-    document.getElementById('deck-points').innerHTML = ''
-    document.getElementById('deck-points').innerHTML = this.cards.length
+  renderLeftCards = () => {
+    document.getElementById('in-game-deck-points').innerHTML = ''
+    document.getElementById('in-game-deck-points').innerHTML = this.cards.length
   }
 
-  addCardTo = (player, cardType = 'up') => {
+  renewDeck = () => this.cards.length < 50 && this.buildCards()
+
+  setCurrentBet = (currentBet) => this.currentBet = currentBet
+
+  getPlayerCash = () => this.playerCash
+  setPlayerCash = (playerCash) => this.playerCash += playerCash
+
+  addCardTo = (currentPlayer, cardType = 'up') => {
     removePreviousCardsAnimations()
 
-    const { type } = player
+    const { type } = currentPlayer
 
     const card = this.cards.pop()
     card.type = cardType
-    player.addCard(card)
+    currentPlayer.addCard(card)
 
-    const playerDeck = this[`${type}Deck`]()
+    const currentPlayerDeck = this[`${type}Deck`]()
     const { suite, name } = card
 
     removeElementById(`${type}-points`)
 
-    playerDeck.innerHTML += pointsTemplate(type, player.getPoints())
-    playerDeck.innerHTML += cardType === 'down'
+    currentPlayerDeck.innerHTML += pointsTemplate(type, currentPlayer.getPoints())
+    currentPlayerDeck.innerHTML += cardType === 'down'
       ? downCardTemplate()
       : upCardTemplate(suite, name, 'animated fadeInLeft')
 
-    if (player.type === 'player') {
-      removeElementById('player-cash')
-      document.getElementById('game').innerHTML += cashTemplate(this.getPlayerCash())
-    }
-
-    this.setLeftCards()
+    this.renderLeftCards()
   }
 
   startGame = () => {
+    this.renewDeck()
     removeElementById('notification-block')
+    this.renderPlayerCash()
 
-    this.setLeftCards()
+    this.renderLeftCards()
     this.prepareTableForGame('start')
     this.addPlayers()
-    this.updatePlayerCash(-10)
 
     this.addCardTo(this.player())
     this.addCardTo(this.player())
@@ -98,9 +100,9 @@ class Table {
   }
 
   double = () => {
+    this.setCurrentBet(this.currentBet * 2)
     this.addCardTo(this.player())
     this.validatePlayerPoints()
-    this.currentBet = 20
     this.stand()
   }
 
@@ -109,6 +111,11 @@ class Table {
       this.notifyResult()
       this.prepareTableForGame('end')
     }
+  }
+
+  renderPlayerCash = () => {
+    removeElementById('player-cash')
+    this.gameWrapper().innerHTML += cashTemplate(this.getPlayerCash())
   }
 
   notifyResult = () => {
@@ -121,9 +128,14 @@ class Table {
     else if (pp === dp) result = 'draw'
     else result = 'lose'
 
-    this.updatePlayerCash(this.currentBet)
-    document.getElementById('game').innerHTML += notificationTemplate(getNotificationMessage(result), result)
+    result === 'lose'
+      ? this.setPlayerCash(-this.currentBet)
+      : this.setPlayerCash(this.currentBet)
+    this.gameWrapper().innerHTML += notificationTemplate(getNotificationMessage(result), result)
+
     this.resultNotified = true
+    this.renderPlayerCash()
+    this.setCurrentBet(DEFAULT_BET)
   }
 
   prepareTableForGame = (type) => {
@@ -133,6 +145,7 @@ class Table {
     if (type !== 'start') return
     this.resultNotified = false
     document.getElementById('dealer-chip').style.display = 'block'
+    document.getElementById('in-game-deck').style.display = 'block'
     this.playerDeck().innerHTML = this.dealerDeck().innerHTML = ''
   }
 }

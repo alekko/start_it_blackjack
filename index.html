@@ -17,17 +17,21 @@
   <body>
     <div id='wrapper'>
       <div id='game'>
-        <div id='dealer' class='hand'></div>
-          <div class='actions'>
-            <button id='before-game-actions' onClick='table.startGame()'>Start</button>
-            <div id='after-game-actions'>
-              <div id='dealer-chip'>Dealer</div>
-              <div id='deck'><p id='deck-points'></p></div>
-              <button onClick='table.hit()'>Hit</button>
-              <button class="double" onClick='table.double()'>Double</button>
-              <button onClick='table.stand()'>Stand</button>
-            </div>
+        <div id='dealer-wrapper'>
+          <div id='dealer-chip'>Dealer</div>
+          <div id='dealer' class='hand'></div>
+          <div id='in-game-deck'><p id='in-game-deck-points'></p></div>
+        </div>
+        <div class='actions'>
+          <div id='before-game-actions'>
+            <button onClick='table.startGame()'>Start</button>
           </div>
+          <div id='after-game-actions'>
+            <button onClick='table.hit()'>Hit</button>
+            <button class="double" onClick='table.double()'>Double</button>
+            <button onClick='table.stand()'>Stand</button>
+          </div>
+        </div>
         <div id='player' class='hand'></div>
       </div>
     </div>

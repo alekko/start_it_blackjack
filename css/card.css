@@ -1,5 +1,5 @@
 #hidden-card {
-  background: #B20000 url('https://www.clowerweb.com/cors/blackjack/card.png') center center no-repeat !important;
+  background: #B20000 url('../img/card.png') center center no-repeat !important;
 }
 
 .card {
@@ -13,16 +13,6 @@
   border-radius: 10px;
   box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
   -webkit-box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
-}
-
-#player {
-  height: 100px;
-  margin-top: 100px;
-}
-
-#dealer {
-  height: 100px;
-  margin-top: 60px;
 }
 
 .hand {
