@@ -21,4 +21,9 @@ class Player {
     this.updatePoints(card.value)
     this.cards.push(card)
   }
+
+  changeNotSwappedAceValue = () => {
+    const notSwappedAce = this.cards.find(card => card.name === 'A' && card.value === 11)
+    notSwappedAce && notSwappedAce.setValue(1)
+  }
 }

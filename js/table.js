@@ -7,13 +7,18 @@ class Table {
     this.currentBet = null
   }
 
-  player = () => this.players.find(player => player.type === 'player')
-  dealer = () => this.players.find(player => player.type === 'dealer')
-  addPlayers = () => this.players = [new Player('player'), new Player('dealer')]
-
   playerDeck  = () => document.getElementById('player')
   dealerDeck  = () => document.getElementById('dealer')
   gameWrapper = () => document.getElementById('game')
+
+  player = () => this.players.find(player => player.type === 'player')
+  dealer = () => this.players.find(player => player.type === 'dealer')
+
+  addPlayers    = () => this.players = [new Player('player'), new Player('dealer')]
+  renewDeck     = () => this.cards.length < 50 && this.buildCards()
+  getPlayerCash = () => this.playerCash
+  setCurrentBet = (currentBet) => this.currentBet = currentBet
+  setPlayerCash = (playerCash) => this.playerCash += playerCash
 
   buildCards = () => {
     this.cards = []
@@ -25,29 +30,17 @@ class Table {
     }
   }
 
-  renderLeftCards = () => {
-    document.getElementById('in-game-deck-points').innerHTML = ''
-    document.getElementById('in-game-deck-points').innerHTML = this.cards.length
-  }
-
-  renewDeck = () => this.cards.length < 50 && this.buildCards()
-
-  setCurrentBet = (currentBet) => this.currentBet = currentBet
-
-  getPlayerCash = () => this.playerCash
-  setPlayerCash = (playerCash) => this.playerCash += playerCash
-
   addCardTo = (currentPlayer, cardType = 'up') => {
     removePreviousCardsAnimations()
 
-    const { type } = currentPlayer
-
     const card = this.cards.pop()
+    const { type } = currentPlayer
+    const { suite, name } = card
+    const currentPlayerDeck = this[`${type}Deck`]()
+
     card.type = cardType
     currentPlayer.addCard(card)
-
-    const currentPlayerDeck = this[`${type}Deck`]()
-    const { suite, name } = card
+    currentPlayer.getPoints() > 21 && currentPlayer.changeNotSwappedAceValue()
 
     removeElementById(`${type}-points`)
 
@@ -56,7 +49,12 @@ class Table {
       ? downCardTemplate()
       : upCardTemplate(suite, name, 'animated fadeInLeft')
 
-    this.renderLeftCards()
+    this.renderLeftCardsCounter()
+  }
+
+  takePlayerCard = () => {
+    this.player().addCardTo(this.takeCardFromDeck())
+    this.validatePlayerPoints()
   }
 
   startGame = () => {
@@ -64,7 +62,7 @@ class Table {
     removeElementById('notification-block')
     this.renderPlayerCash()
 
-    this.renderLeftCards()
+    this.renderLeftCardsCounter()
     this.prepareTableForGame('start')
     this.addPlayers()
 
@@ -72,11 +70,6 @@ class Table {
     this.addCardTo(this.player())
     this.addCardTo(this.dealer())
     this.addCardTo(this.dealer(), 'down')
-  }
-
-  takePlayerCard = () => {
-    this.player().addCardTo(this.takeCardFromDeck())
-    this.validatePlayerPoints()
   }
 
   hit = () => {
@@ -113,11 +106,6 @@ class Table {
     }
   }
 
-  renderPlayerCash = () => {
-    removeElementById('player-cash')
-    this.gameWrapper().innerHTML += cashTemplate(this.getPlayerCash())
-  }
-
   notifyResult = () => {
     if (this.resultNotified) return
     const pp = this.player().getPoints()
@@ -131,11 +119,22 @@ class Table {
     result === 'lose'
       ? this.setPlayerCash(-this.currentBet)
       : this.setPlayerCash(this.currentBet)
+
     this.gameWrapper().innerHTML += notificationTemplate(getNotificationMessage(result), result)
 
     this.resultNotified = true
     this.renderPlayerCash()
     this.setCurrentBet(DEFAULT_BET)
+  }
+
+  renderPlayerCash = () => {
+    removeElementById('player-cash')
+    this.gameWrapper().innerHTML += cashTemplate(this.getPlayerCash())
+  }
+
+  renderLeftCardsCounter = () => {
+    document.getElementById('in-game-deck-points').innerHTML = ''
+    document.getElementById('in-game-deck-points').innerHTML = this.cards.length
   }
 
   prepareTableForGame = (type) => {

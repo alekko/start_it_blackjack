@@ -5,4 +5,6 @@ class Card {
     this.suite = suite
     this.value = value
   }
+
+  setValue = (value) => this.value = value
 }
