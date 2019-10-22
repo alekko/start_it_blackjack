@@ -1,5 +1,5 @@
 .actions {
-  margin-top: 100px;
+  margin-top: -100px;
   text-align: center;
 }
 
@@ -28,7 +28,6 @@ button {
   border: 0px;
   color: #000000;
 }
-
 
 #after-game-actions {
   display: none;
