@@ -1,17 +1,18 @@
 const notifications = {
-  win :[
+  win: [
     'Malacis!',
-    'Apsveicu, šī bija laba partija!',
-    'Šo gan es negaidīju. Apsveicu!'
+    'Apsveicu, šī bija laba spēle!',
+    'Negaidīts pavērsiens, Jūs uzvarējāt! Apsveicu!'
   ],
   lose: [
-    'Nākamreiz Tev noteikti paveiksies!',
-    'Vienmēr uzvarēt nevar!',
-    'Ši nebija Tava partija!'
+    'Nākamreiz Tev noteikti paveiksies, vai arī nē!',
+    'Vienmēr uzvarēt nevar, zaudējums arī ir rezultāts!',
+    'Šī nebija Tava labākā spēle, varbūt pat sliktākā!'
   ],
   draw: [
-    'Neizšķirts tomēr nav zaudējums!',
-    'Ir uzvaras, ir zaudējumi, taču šeit ir neizšķirts!'
+    'Neizšķirts tomēr nav zaudējums! Bet nav arī uzvara!',
+    'Ir uzvaras, ir zaudējumi, taču šeit ir neizšķirts!',
+    'Izliksimies, ka neizšķirts nav bijis un mēģini vēlreiz!'
   ]
 }
 
