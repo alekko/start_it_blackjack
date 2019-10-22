@@ -3,9 +3,9 @@
 }
 
 .card {
-  width: 75px;
+  width: 95px;
   float: left;
-  height: 100px;
+  height: 130px;
   background: #fff;
   position: relative;
   margin-right: 10px;
@@ -54,7 +54,7 @@
 }
 
 .card p {
-  font-size: 20px;
+  font-size: 30px;
   margin-top: 40px;
   text-align: center;
 }
@@ -88,15 +88,15 @@
 }
 
 .card:before {
-  top: 5px;
+  top: 0px;
   left: 5px;
-  font-size: 25px;
+  font-size: 30px;
   position: absolute;
 }
 
 .card:after {
   right: 5px;
-  bottom: 5px;
-  font-size: 25px;
+  bottom: 0px;
+  font-size: 30px;
   position: absolute;
 }

@@ -1,5 +1,5 @@
 .actions {
-  margin-top: -100px;
+  margin-top: 0px;
   text-align: center;
 }
 
@@ -30,4 +30,9 @@ button {
 
 #after-game-actions {
   display: none;
+}
+
+#before-game-actions {
+  position:relative;
+  top: 50px;
 }
