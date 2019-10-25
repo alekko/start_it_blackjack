@@ -30,7 +30,8 @@
      top: 0px; 
      left: 0px; 
     }
-   to {
+   
+    to {
      transform: rotate(360deg);
      top: 40%; 
      left:40%; 
