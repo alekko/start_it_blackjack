@@ -3,24 +3,24 @@
 Sākums
 ----------
 
-Pirms komandu izpildes nepieciešams uzstādīt vides mainīgos ``FLASK_APP`` un ``FLASK_DEBUG`` ::
+Pirms komandu izpildes nepieciešams uzstādīt vides mainīgos ``FLASK_APP`` un ``FLASK_DEBUG``:
 
     export FLASK_APP=/path/to/app.py
     export FLASK_DEBUG=1
 
-Veicam vides uzstādīšanu ::
+Veicam vides uzstādīšanu:
 
     cd start_it_blackjack
     pip3 install -r requirements.txt
 
-Lai piedarbinātu lietotni izmantojam::
+Lai piedarbinātu lietotni izmantojam:
 
     flask run
 
 Priekš shell
 -----
 
-Lai atvērtu interaktīvo shell, palaidiet ::
+Lai atvērtu interaktīvo shell:
 
     flask shell
 
