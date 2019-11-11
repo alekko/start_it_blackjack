@@ -5,8 +5,15 @@ Sākums
 
 Pirms komandu izpildes nepieciešams uzstādīt vides mainīgos ``FLASK_APP`` un ``FLASK_DEBUG``:
 
+Linux:
     export FLASK_APP=/path/to/app.py
     export FLASK_DEBUG=1
+
+Windows CMD:
+    set FLASK_APP=/path/to/app.py
+
+Windows PowerShell:
+    $env:FLASK_APP = /path/to/app.py
 
 Veicam vides uzstādīšanu:
 
