@@ -9,13 +9,13 @@ def index():
 
 @app.route('/save_result', methods = ['POST'])
 def save_result():
-  # saņemsim parametrus
-  print(request.form.get('value'))
-  # value = request.args.get('value', type=str)
+  # saņemam parametrus kā json objektu
+  params = request.get_json()
+  # piekļūstam parametriem pēc to atslēgas
+  result = params['value']
   # ierakstīsim tos failā
-  # write_file(value)
-
-  return 'ok'
+  write_file(result)
+  return jsonify(status='ok')
 
 @app.route('/show_results')
 def show_results():
