@@ -122,9 +122,28 @@ class Table {
 
     this.gameWrapper().innerHTML += notificationTemplate(getNotificationMessage(result), result)
 
+        // sūtām uz serveri rezultātu
+    this.sendResultsToServer(result)
+
     this.resultNotified = true
     this.renderPlayerCash()
     this.setCurrentBet(DEFAULT_BET)
+  }
+
+  sendResultsToServer = (result) => {
+    console.log('Sākam sūtīt rezultātus')
+    let formData = new FormData()
+    formData.append('value', result)
+
+    fetch('http://127.0.0.1:5000/save_result', {
+      method: 'POST',
+      headers: { 'Content-Type': 'form-data' },
+      body: formData
+    }).then(function(response) {
+      console.log(response.json())
+    }).then(function(data) {
+      console.log(data)
+    })
   }
 
   renderPlayerCash = () => {
