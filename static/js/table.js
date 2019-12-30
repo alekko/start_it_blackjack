@@ -70,6 +70,7 @@ class Table {
     this.addCardTo(this.player())
     this.addCardTo(this.dealer())
     this.addCardTo(this.dealer(), 'down')
+    this.player().name = prompt("Ievadi spēlētāja vārdu","Azarts")
   }
 
   hit = () => {
@@ -122,19 +123,19 @@ class Table {
 
     this.gameWrapper().innerHTML += notificationTemplate(getNotificationMessage(result), result)
 
-    // sūtām uz serveri rezultātu
-    this.sendResultsToServer(result)
-
     this.resultNotified = true
     this.renderPlayerCash()
     this.setCurrentBet(DEFAULT_BET)
-  }
 
-  sendResultsToServer = (result) => {
+    // sūtām uz serveri rezultātu
+    let rezultats = JSON.stringify({ nauda: this.getPlayerCash() , status: result, gamer: this.player().name})
+    this.sendResultsToServer(rezultats)
+  }
+sendResultsToServer = (rezultats) => {
     // sūtām kā JSON
     let parameters = {
       method: 'POST',
-      body: JSON.stringify({ value: result }),
+      body: JSON.stringify({ value: rezultats}),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -143,7 +144,6 @@ class Table {
     .then(res => console.log(res))
     .then(res => console.log(res))
   }
-
   renderPlayerCash = () => {
     removeElementById('player-cash')
     this.gameWrapper().innerHTML += cashTemplate(this.getPlayerCash())
