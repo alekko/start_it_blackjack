@@ -74,7 +74,7 @@ class Table {
     } else {
       this.player().setName(getCookie('name'))
     }
-
+    document.getElementById('player-chip').innerText = this.player().setName(getCookie('name'))
     this.addCardTo(this.player())
     this.addCardTo(this.player())
     this.addCardTo(this.dealer())
@@ -176,6 +176,7 @@ class Table {
     if (type !== 'start') return
     this.resultNotified = false
     document.getElementById('dealer-chip').style.display = 'block'
+    document.getElementById('player-chip').style.display = 'block'
     document.getElementById('in-game-deck').style.display = 'block'
     this.playerDeck().innerHTML = this.dealerDeck().innerHTML = ''
   }

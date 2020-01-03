@@ -1,0 +1,26 @@
+<p>Results are here:</p>
+<!-- Parādām mūsu faila rindas -->
+<UL  id="scores">
+{% for value in lines %}
+<li>
+    {{ value }}
+</li>
+
+{% endfor %}
+</UL>
+<table>
+    <tbody id="tabula"></tbody>
+</table>
+ <script>
+     dati = document.getElementById('scores').innerText
+         let test = JSON.stringify(dati)
+        console.log(test)
+        var objekts = JSON.parse(test)
+        console.log(objekts)
+let tbody = document.getElementById("tabula")
+for(let i=0; i < objekts.length; i++){
+    let tr = "<tr>"
+        tr += "<td>" + objekts[i][0] + "</td>" + "<td>" + objekts[i][0] + "</td></tr>";
+tbody.innerHTML += tr;
+}
+</script>
