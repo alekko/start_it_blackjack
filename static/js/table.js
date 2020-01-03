@@ -64,13 +64,21 @@ class Table {
 
     this.renderLeftCardsCounter()
     this.prepareTableForGame('start')
+
     this.addPlayers()
+
+    if (!getCookie('name')) {
+      const name = prompt('Lūdzu ievadiet savu vārdu')
+      this.player().setName(name)
+      setCookie('name', name, 90)
+    } else {
+      this.player().setName(getCookie('name'))
+    }
 
     this.addCardTo(this.player())
     this.addCardTo(this.player())
     this.addCardTo(this.dealer())
     this.addCardTo(this.dealer(), 'down')
-    this.player().name = prompt("Ievadi spēlētāja vārdu","Azarts")
   }
 
   hit = () => {
@@ -126,24 +134,31 @@ class Table {
     this.resultNotified = true
     this.renderPlayerCash()
     this.setCurrentBet(DEFAULT_BET)
-
-    // sūtām uz serveri rezultātu
-    let rezultats = JSON.stringify({ nauda: this.getPlayerCash() , status: result, gamer: this.player().name})
-    this.sendResultsToServer(rezultats)
+    this.sendResultsToServer(result)
   }
-sendResultsToServer = (rezultats) => {
-    // sūtām kā JSON
+
+  sendResultsToServer = result => {
     let parameters = {
       method: 'POST',
-      body: JSON.stringify({ value: rezultats}),
+      body: JSON.stringify({
+        bet: this.getPlayerCash(),
+        result,
+        player: this.player().name
+      }),
       headers: {
         'Content-Type': 'application/json'
       }
     }
     fetch('http://127.0.0.1:5000/save_result', parameters)
-    .then(res => console.log(res))
-    .then(res => console.log(res))
+    .then(res => res.json())
+    .then((data) => {
+      console.log('Success:', data)
+    })
+    .catch((error) => {
+      console.error('Error:', error)
+    })
   }
+
   renderPlayerCash = () => {
     removeElementById('player-cash')
     this.gameWrapper().innerHTML += cashTemplate(this.getPlayerCash())

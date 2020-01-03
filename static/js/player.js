@@ -3,6 +3,7 @@ class Player {
     this.type   = type
     this.cards  = []
     this.points = 0
+    this.name   = null
   }
 
   updatePoints = point => this.points += point
@@ -10,6 +11,9 @@ class Player {
 
   turnUpHiddenCard = () => this.getHiddenCard().type = 'up'
   showHiddenCards = () => this.cards.map(card => card.type = 'up')
+
+  setName = (name) => this.name = name
+  getName = () => this.name
 
   getPoints = () => this.cards.filter(
     card => card.type === 'up'

@@ -1,4 +1,8 @@
-{"nauda":110,"status":"win"}
-{"nauda":110,"status":"win"}
-{"nauda":90,"status":"lose","gamer":"Azarts"}
-{"nauda":100,"status":"win","gamer":"Pēteris"}
+None 110 win
+None 90 lose
+Peteris 80 lose
+Aleksandrs 80 lose
+Aleksandrs 110 win
+Aleksandrs 80 lose
+Aleksandrs 70 lose
+Aleksandrs 110 win

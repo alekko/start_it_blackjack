@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS
 from file_processing import write_file, read_lines
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def index():
@@ -9,17 +11,10 @@ def index():
 
 @app.route('/save_result', methods = ['POST'])
 def save_result():
-  # saņemam parametrus kā json objektu
   params = request.get_json()
-  # piekļūstam parametriem pēc to atslēgas
-  result = params['value']
-  # ierakstīsim tos failā
-  write_file(result)
+  write_file(f"{params['player']} {params['bet']} {params['result']}")
   return jsonify(status='ok')
 
 @app.route('/show_results')
 def show_results():
-  # nolasā, rezultātus no mūsu faila
-  file_lines = read_lines()
-  # aizsūtīt uz mūsu html failu
-  return render_template('results.html', lines = file_lines)
+  return render_template('results.html', lines = read_lines())
