@@ -26,5 +26,5 @@ def read_file():
 
 def read_lines():
   with open(file_name) as f:
-    lines_array = f.readlines()
+    lines_array = f.readlines()  
   return lines_array
