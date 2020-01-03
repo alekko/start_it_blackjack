@@ -1,8 +1,0 @@
-None 110 win
-None 90 lose
-Peteris 80 lose
-Aleksandrs 80 lose
-Aleksandrs 110 win
-Aleksandrs 80 lose
-Aleksandrs 70 lose
-Aleksandrs 110 win

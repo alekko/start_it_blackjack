@@ -141,9 +141,9 @@ class Table {
     let parameters = {
       method: 'POST',
       body: JSON.stringify({
-        bet: this.getPlayerCash(),
         result,
-        player: this.player().name
+        bet: this.getPlayerCash(),
+        player: this.player().getName()
       }),
       headers: {
         'Content-Type': 'application/json'
