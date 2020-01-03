@@ -176,6 +176,11 @@ class Table {
     if (type !== 'start') return
     this.resultNotified = false
     document.getElementById('dealer-chip').style.display = 'block'
+    document.getElementById('player-chip').style.display = 'block'
+    let pname = getCookie('name')
+    let newpname = pname.slice(0, 4);
+    if (pname.length > 5) document.getElementById('player-chip').innerHTML = newpname + '...'
+    else document.getElementById('player-chip').innerHTML = pname
     document.getElementById('in-game-deck').style.display = 'block'
     this.playerDeck().innerHTML = this.dealerDeck().innerHTML = ''
   }
