@@ -58,22 +58,15 @@ class Table {
   }
 
   startGame = () => {
+    this.addPlayers()
+    this.setPlayerName()
     this.renewDeck()
-    removeElementById('notification-block')
-    this.renderPlayerCash()
 
+    removeElementById('notification-block')
+
+    this.renderPlayerCash()
     this.renderLeftCardsCounter()
     this.prepareTableForGame('start')
-
-    this.addPlayers()
-
-    if (!getCookie('name')) {
-      const name = prompt('Lūdzu ievadiet savu vārdu')
-      this.player().setName(name)
-      setCookie('name', name, 90)
-    } else {
-      this.player().setName(getCookie('name'))
-    }
 
     this.addCardTo(this.player())
     this.addCardTo(this.player())
@@ -159,16 +152,6 @@ class Table {
     })
   }
 
-  renderPlayerCash = () => {
-    removeElementById('player-cash')
-    this.gameWrapper().innerHTML += cashTemplate(this.getPlayerCash())
-  }
-
-  renderLeftCardsCounter = () => {
-    document.getElementById('in-game-deck-points').innerHTML = ''
-    document.getElementById('in-game-deck-points').innerHTML = this.cards.length
-  }
-
   prepareTableForGame = (type) => {
     document.getElementById('before-game-actions').style.display = type === 'start' ? 'none' : 'inline-block'
     document.getElementById('after-game-actions').style.display = type === 'start' ? 'inline-block' : 'none'
@@ -179,11 +162,31 @@ class Table {
     document.getElementById('player-chip').style.display = 'block'
     document.getElementById('in-game-deck').style.display = 'block'
 
-    this.setPlayerName()
+    this.renderPlayerName()
     this.playerDeck().innerHTML = this.dealerDeck().innerHTML = ''
   }
 
   setPlayerName = () => {
+    if (!getCookie('name')) {
+      const name = prompt('Lūdzu ievadiet savu vārdu')
+      this.player().setName(name)
+      setCookie('name', name, 90)
+    } else {
+      this.player().setName(getCookie('name'))
+    }
+  }
+
+  renderPlayerCash = () => {
+    removeElementById('player-cash')
+    this.gameWrapper().innerHTML += cashTemplate(this.getPlayerCash())
+  }
+
+  renderLeftCardsCounter = () => {
+    document.getElementById('in-game-deck-points').innerHTML = ''
+    document.getElementById('in-game-deck-points').innerHTML = this.cards.length
+  }
+
+  renderPlayerName = () => {
     const playerName = getCookie('name')
     document.getElementById('player-chip').innerHTML = playerName.length > 5
       ? playerName.slice(0, 4) + '...'
