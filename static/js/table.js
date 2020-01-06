@@ -176,7 +176,17 @@ class Table {
     if (type !== 'start') return
     this.resultNotified = false
     document.getElementById('dealer-chip').style.display = 'block'
+    document.getElementById('player-chip').style.display = 'block'
     document.getElementById('in-game-deck').style.display = 'block'
+
+    this.setPlayerName()
     this.playerDeck().innerHTML = this.dealerDeck().innerHTML = ''
+  }
+
+  setPlayerName = () => {
+    const playerName = getCookie('name')
+    document.getElementById('player-chip').innerHTML = playerName.length > 5
+      ? playerName.slice(0, 4) + '...'
+      : playerName
   }
 }

@@ -1,0 +1,11 @@
+.dataTables_info, .dataTables_length, .dataTables_filter, .dataTables_paginate {
+  color: white;
+}
+
+td, th {
+  color: white;
+}
+
+th {
+  background: rgb(27, 95, 243);
+}
