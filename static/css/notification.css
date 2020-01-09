@@ -9,6 +9,10 @@
   left: 0;
 }
 
+#notification-block > p {
+  margin-top: 10px;
+}
+
 .win-notification {
   background: darkgreen;
 }

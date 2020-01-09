@@ -12,7 +12,7 @@ body{
   background: radial-gradient(circle, rgba(13,98,40,1) 0%, rgba(1,49,23,1) 100%);
 }
 
-.cash {
+.cash, .results-button {
   font-size:25px;
   position: absolute;
   left: 0;
@@ -22,6 +22,19 @@ body{
   background: #698676;
   text-align: center;
   line-height: 2;
+}
+
+.results-button {
+  right: 0;
+  left: auto;
+}
+
+.results-button > a:hover, a:visited, a:link, a:active {
+  text-decoration: none;
+}
+
+.results-button > a {
+  color: rgb(13,98,40);
 }
 
 #in-game-deck {
@@ -39,16 +52,17 @@ body{
   color: white;
   font-size: 20px;
   text-align: center;
-  padding-left: 30px;
+  padding-left: 27px;
   padding-top: 70px;
   transform: rotate(-45deg);
   -webkit-transform: rotate(-45deg);
   -moz-transform: rotate(-45deg);
   -ms-transform: rotate(-45deg);
   -o-transform: rotate(-45deg);
+  margin: 10px;
 }
 
-#dealer-chip {
+#dealer-chip, #player-chip {
   width: 100px;
   height: 100px;
   color: #000000;
@@ -59,8 +73,12 @@ body{
   position: absolute;
   border: 2px solid black;
   border-radius: 100px;
-  left: 20%;
-  top: 100px;
+  left: 53%;
+  top: 180px;
   z-index: 1;
   display: none;
+}
+
+#player-chip {
+  top: 500px;
 }

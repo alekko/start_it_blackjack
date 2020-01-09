@@ -58,22 +58,15 @@ class Table {
   }
 
   startGame = () => {
+    this.addPlayers()
+    this.setPlayerName()
     this.renewDeck()
-    removeElementById('notification-block')
-    this.renderPlayerCash()
 
+    removeElementById('notification-block')
+
+    this.renderPlayerCash()
     this.renderLeftCardsCounter()
     this.prepareTableForGame('start')
-
-    this.addPlayers()
-
-    if (!getCookie('name')) {
-      const name = prompt('Lūdzu ievadiet savu vārdu')
-      this.player().setName(name)
-      setCookie('name', name, 90)
-    } else {
-      this.player().setName(getCookie('name'))
-    }
 
     this.addCardTo(this.player())
     this.addCardTo(this.player())
@@ -149,7 +142,7 @@ class Table {
         'Content-Type': 'application/json'
       }
     }
-    fetch('http://127.0.0.1:5000/save_result', parameters)
+    fetch('/save_result', parameters)
     .then(res => res.json())
     .then((data) => {
       console.log('Success:', data)
@@ -157,6 +150,30 @@ class Table {
     .catch((error) => {
       console.error('Error:', error)
     })
+  }
+
+  prepareTableForGame = (type) => {
+    document.getElementById('before-game-actions').style.display = type === 'start' ? 'none' : 'inline-block'
+    document.getElementById('after-game-actions').style.display = type === 'start' ? 'inline-block' : 'none'
+
+    if (type !== 'start') return
+    this.resultNotified = false
+    document.getElementById('dealer-chip').style.display = 'block'
+    document.getElementById('player-chip').style.display = 'block'
+    document.getElementById('in-game-deck').style.display = 'block'
+
+    this.renderPlayerName()
+    this.playerDeck().innerHTML = this.dealerDeck().innerHTML = ''
+  }
+
+  setPlayerName = () => {
+    if (!getCookie('name')) {
+      const name = prompt('Lūdzu ievadiet savu vārdu')
+      this.player().setName(name)
+      setCookie('name', name, 90)
+    } else {
+      this.player().setName(getCookie('name'))
+    }
   }
 
   renderPlayerCash = () => {
@@ -169,14 +186,10 @@ class Table {
     document.getElementById('in-game-deck-points').innerHTML = this.cards.length
   }
 
-  prepareTableForGame = (type) => {
-    document.getElementById('before-game-actions').style.display = type === 'start' ? 'none' : 'inline-block'
-    document.getElementById('after-game-actions').style.display = type === 'start' ? 'inline-block' : 'none'
-
-    if (type !== 'start') return
-    this.resultNotified = false
-    document.getElementById('dealer-chip').style.display = 'block'
-    document.getElementById('in-game-deck').style.display = 'block'
-    this.playerDeck().innerHTML = this.dealerDeck().innerHTML = ''
+  renderPlayerName = () => {
+    const playerName = getCookie('name')
+    document.getElementById('player-chip').innerHTML = playerName.length > 5
+      ? playerName.slice(0, 4) + '...'
+      : playerName
   }
 }

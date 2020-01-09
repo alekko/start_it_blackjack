@@ -1,39 +1,26 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset='UTF-8'>
-    <title>21</title>
-    <script type='text/javascript' charset='UTF-8' src='../static/js/player.js'></script>
-    <script type='text/javascript' charset='UTF-8' src='../static/js/card.js'></script>
-    <script type='text/javascript' charset='UTF-8' src='../static/js/deck.js'></script>
-    <script type='text/javascript' charset='UTF-8' src='../static/js/table.js'></script>
-    <script type='text/javascript' charset='UTF-8' src='../static/js/templates.js'></script>
-    <script type='text/javascript' charset='UTF-8' src='../static/js/notifications.js'></script>
-    <script type='text/javascript' charset='UTF-8' src='../static/js/helpers.js'></script>
-    <script type='text/javascript' charset='UTF-8' src='../static/js/main.js'></script>
-    <link rel='stylesheet' href='../static/css/main.css'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-  </head>
-  <body>
-    <div id='wrapper'>
-      <div id='game'>
-        <div id='dealer-wrapper'>
-          <div id='dealer-chip'>Dealer</div>
-          <div id='dealer' class='hand'></div>
-          <div id='in-game-deck'><p id='in-game-deck-points'></p></div>
-        </div>
-        <div class='actions'>
-          <div id='before-game-actions'>
-            <button onClick='table.startGame()'>Start</button>
-          </div>
-          <div id='after-game-actions'>
-            <button onClick='table.hit()'>Hit</button>
-            <button class="double" onClick='table.double()'>Double</button>
-            <button onClick='table.stand()'>Stand</button>
-          </div>
-        </div>
-        <div id='player' class='hand'></div>
+{% extends 'layout.html' %}
+
+{% block content %}
+  <div id='wrapper'>
+    <div id='game'>
+      <div id='dealer-wrapper'>
+        <div id='dealer-chip'>Dealer</div>
+        <div id='dealer' class='hand'></div>
+        <div id='in-game-deck'><p id='in-game-deck-points'></p></div>
       </div>
+      <div class='actions'>
+        <div id='before-game-actions'>
+          <button onClick='table.startGame()'>Start</button>
+        </div>
+        <div id='after-game-actions'>
+          <button onClick='table.hit()'>Hit</button>
+          <button class='double' onClick='table.double()'>Double</button>
+          <button onClick='table.stand()'>Stand</button>
+        </div>
+        <div id='player-chip'></div>
+      </div>
+      <div id='player' class='hand'></div>
+      <div class='results-button'><a href='/show_results'>Results</a></div>
     </div>
-  </body>
-</html>
+  </div>
+{% endblock %}
