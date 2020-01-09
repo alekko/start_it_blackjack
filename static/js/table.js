@@ -142,7 +142,7 @@ class Table {
         'Content-Type': 'application/json'
       }
     }
-    fetch('http://127.0.0.1:5000/save_result', parameters)
+    fetch('/save_result', parameters)
     .then(res => res.json())
     .then((data) => {
       console.log('Success:', data)
