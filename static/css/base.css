@@ -67,3 +67,7 @@ body{
 #player-chip {
   top: 400px;
 }
+
+.stats{
+  right: 50%;
+}

@@ -1,0 +1,13 @@
+body{
+    background: rgb(13,98,40);
+    background: radial-gradient(circle, rgba(13,98,40,1) 0%, rgba(1,49,23,1) 100%);
+}
+.dataTables_info, .dataTables_length, .dataTables_filter, .dataTables_paginate {
+color: white;
+}
+td, th{
+    color: white;
+}
+th{
+    background: rgb(27, 95, 243);
+}

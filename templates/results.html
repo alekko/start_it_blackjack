@@ -1,5 +1,30 @@
-<p>Results are here:</p>
-<!-- Parādām mūsu faila rindas -->
-{% for value in lines %}
-  <p>{{ value }}</p>
-{% endfor %}
+{% extends 'layout.html' %}
+{% block content %}
+<script>
+  onload = () => $('#table').DataTable()
+  </script>
+  <div class="container mb-3 mt-3">
+    <table id="table" class="table table-striped table-bordered w-100">
+      <thead>
+          <tr>
+            <th>Name</th>
+            <th>Money</th>
+            <th>Status</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for line in lines %}
+          {% set items = line.split() %}
+            <tr>
+              <td>{{ items[0] }}</td>
+              <td>{{ items[1] }}</td>
+              <td>{{ items[2] }}</td>
+            </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <button onClick='table.backToGame()'>Back to game</button>
+  </div>
+{% endblock %}

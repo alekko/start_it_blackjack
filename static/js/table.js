@@ -159,6 +159,14 @@ class Table {
     })
   }
 
+  showResults = () => {
+    window.location = 'http://127.0.0.1:5000/show_results'
+  }
+
+  backToGame = () => {
+    window.history.back()
+  }
+
   renderPlayerCash = () => {
     removeElementById('player-cash')
     this.gameWrapper().innerHTML += cashTemplate(this.getPlayerCash())
