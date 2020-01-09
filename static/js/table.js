@@ -64,7 +64,16 @@ class Table {
 
     this.renderLeftCardsCounter()
     this.prepareTableForGame('start')
+
     this.addPlayers()
+
+    if (!getCookie('name')) {
+      const name = prompt('Lūdzu ievadiet savu vārdu')
+      this.player().setName(name)
+      setCookie('name', name, 90)
+    } else {
+      this.player().setName(getCookie('name'))
+    }
 
     this.addCardTo(this.player())
     this.addCardTo(this.player())
@@ -125,6 +134,29 @@ class Table {
     this.resultNotified = true
     this.renderPlayerCash()
     this.setCurrentBet(DEFAULT_BET)
+    this.sendResultsToServer(result)
+  }
+
+  sendResultsToServer = result => {
+    let parameters = {
+      method: 'POST',
+      body: JSON.stringify({
+        result,
+        bet: this.getPlayerCash(),
+        player: this.player().getName()
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    fetch('http://127.0.0.1:5000/save_result', parameters)
+    .then(res => res.json())
+    .then((data) => {
+      console.log('Success:', data)
+    })
+    .catch((error) => {
+      console.error('Error:', error)
+    })
   }
 
   renderPlayerCash = () => {
