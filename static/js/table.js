@@ -168,7 +168,8 @@ class Table {
 
   setPlayerName = () => {
     if (!getCookie('name')) {
-      const name = prompt('Lūdzu ievadiet savu vārdu')
+      let name = null
+      while(!name) name = prompt('Lūdzu ievadiet savu vārdu')
       this.player().setName(name)
       setCookie('name', name, 90)
     } else {
